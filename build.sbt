@@ -2,6 +2,12 @@ name := "html2pdf-ms"
 
 version := "0.0.0"
 
+organization := "eu.timepit"
+startYear := Some(2015)
+licenses += "GPL-3.0" -> url("http://www.gnu.org/licenses/gpl-3.0.html")
+scmInfo := Some(ScmInfo(url("https://github.com/fthomas/html2pdf-ms"),
+                        "git@github.com:fthomas/html2pdf-ms.git"))
+
 scalaVersion := "2.11.6"
 scalacOptions ++= Seq(
   "-deprecation",
