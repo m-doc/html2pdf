@@ -5,7 +5,7 @@
 [![Build Status](https://travis-ci.org/fthomas/html2pdf-ms.svg?branch=master)](https://travis-ci.org/fthomas/html2pdf-ms)
 
 **html2pdf-ms** is a microservice for converting HTML to PDF. It is built on top of
-[wkhtmltopdf](http://wkhtmltopdf.org) for the conversion from PDF and by [http4s](http://http4s.org)
+[wkhtmltopdf](http://wkhtmltopdf.org) for the conversion to PDF and by [http4s](http://http4s.org)
 and [scalaz-stream](https://github.com/scalaz/scalaz-stream) for serving them over HTTP.
 Here are some live examples of webpages converted to PDF:
 
