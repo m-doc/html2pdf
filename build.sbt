@@ -25,8 +25,7 @@ val http4sVersion = "0.6.4"
 libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
-  "org.http4s" %% "http4s-blazeserver" % http4sVersion,
-  "org.scalaz.stream" %% "scalaz-stream" % "0.6a"
+  "org.http4s" %% "http4s-blazeserver" % http4sVersion
 )
 
 resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
@@ -36,3 +35,13 @@ initialCommands := """
 """
 
 scalariformSettings
+
+// package settings
+enablePlugins(DebianPlugin)
+enablePlugins(JavaServerAppPackaging)
+
+maintainer := "Frank S. Thomas <frank@timepit.eu>"
+packageSummary := "Purely functional microservice for HTML to PDF conversion"
+packageDescription := "TODO"
+debianPackageDependencies in Debian ++= Seq("wkhtmltopdf")
+serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV

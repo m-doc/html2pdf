@@ -16,7 +16,7 @@ object Html2PdfService extends App {
   }
 
   val server = BlazeBuilder
-    .bindLocal(8080)
+    .bindHttp(8080)
     .mountService(route)
     .run
 
