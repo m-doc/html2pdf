@@ -31,4 +31,8 @@ libraryDependencies ++= Seq(
 
 resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 
+initialCommands := """
+  import html2pdf._
+"""
+
 scalariformSettings
