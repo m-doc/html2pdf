@@ -9,14 +9,16 @@ import scalaz.stream.Process._
 import scalaz.stream._
 
 object converter {
-  def mkPdf(url: String): Process[Task, ByteVector] =
+  def mkPdf(url: String): Process[Task, ByteVector] = {
+    val bufferSize = 4096
     eval(mkTempFile("pdf")).flatMap { pdfFile =>
       val makePdf = eval_(execWkHtmlToPdf(url, pdfFile))
-      val readPdf = constant(4096).toSource.through(nio.file.chunkR(pdfFile))
+      val readPdf = constant(bufferSize).toSource.through(nio.file.chunkR(pdfFile))
       val deletePdf = eval_(delete(pdfFile))
 
       (makePdf ++ readPdf).onComplete(deletePdf)
     }
+  }
 
   def delete(path: Path): Task[Unit] =
     Task.delay(Files.delete(path))
@@ -24,13 +26,13 @@ object converter {
   def exec(cmd: String, args: String*): Task[String] =
     Task.delay {
       import scala.sys.process._
-      s"$cmd ${args.mkString(" ")}".!!
+      (cmd +: args).!!
     }
 
   def execWkHtmlToPdf(input: String, output: Path): Task[String] =
-    exec("wkhtmltopdf.sh", input, output.toString)
+    exec("wkhtmltopdf-h2p.sh", input, output.toString)
 
   def mkTempFile(extension: String): Task[Path] =
-    exec("tempfile", "-p", "h2pms", "-s", s".$extension")
+    exec("tempfile", "-p", "h2p", "-s", s".$extension")
       .map(filename => Paths.get(filename.trim))
 }
