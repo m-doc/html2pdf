@@ -6,8 +6,8 @@
 
 **html2pdf-ms** is a microservice for converting HTML to PDF.  The actual conversion is done by
 [wkhtmltopdf](http://wkhtmltopdf.org) and the PDFs are served by [http4s](http://http4s.org) and
-[scalaz-stream](https://github.com/scalaz/scalaz-stream). Here are some live examples of some
-webpages converted to PDF:
+[scalaz-stream](https://github.com/scalaz/scalaz-stream). Here are some live examples of webpages
+converted to PDF:
 
 * http://html2pdf.timepit.eu/pdf?url=http://en.wikipedia.org
 * http://html2pdf.timepit.eu/pdf?url=http://google.com
