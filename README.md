@@ -10,7 +10,9 @@
 converted to PDF:
 
 * http://html2pdf.timepit.eu/pdf?url=http://en.wikipedia.org
+* http://html2pdf.timepit.eu/pdf?url=http://github.com
+* http://html2pdf.timepit.eu/pdf?url=http://gnu.org
 * http://html2pdf.timepit.eu/pdf?url=http://google.com
+* http://html2pdf.timepit.eu/pdf?url=http://http4s.org
+* http://html2pdf.timepit.eu/pdf?url=http://m-net.de
 * http://html2pdf.timepit.eu/pdf?url=http://reddit.com
-
-Note that only a few URLs are allowed for conversion.
