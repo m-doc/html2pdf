@@ -43,5 +43,5 @@ enablePlugins(JavaServerAppPackaging)
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
 packageSummary := "Purely functional microservice for HTML to PDF conversion"
 packageDescription := "TODO"
-debianPackageDependencies in Debian ++= Seq("wkhtmltopdf")
+debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV

@@ -9,10 +9,11 @@ import org.http4s.server.blaze.BlazeBuilder
 object Html2PdfService extends App {
   val route = HttpService {
     case req @ GET -> Root / "pdf" =>
-      val url = req.params.get("url")
+      val param = "url"
+      val url = req.params.get(param)
       val pdf = url.map(converter.mkPdf)
-      val rsp = pdf.map(p => Ok(p).withHeaders(`Content-Type`(`application/pdf`)))
-      rsp.getOrElse(BadRequest("url parameter not specified"))
+      val response = pdf.map(p => Ok(p).withHeaders(`Content-Type`(`application/pdf`)))
+      response.getOrElse(BadRequest(s"parameter '$param' is not specified"))
   }
 
   val server = BlazeBuilder

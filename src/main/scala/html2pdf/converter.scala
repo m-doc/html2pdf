@@ -28,7 +28,7 @@ object converter {
     }
 
   def execWkHtmlToPdf(input: String, output: Path): Task[String] =
-    exec("wkhtmltopdf", input, output.toString)
+    exec("wkhtmltopdf.sh", input, output.toString)
 
   def mkTempFile(extension: String): Task[Path] =
     exec("tempfile", "-p", "h2pms", "-s", s".$extension")
