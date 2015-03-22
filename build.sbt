@@ -56,3 +56,4 @@ serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.Sys
 buildInfoSettings
 sourceGenerators in Compile <+= buildInfo
 buildInfoKeys := Seq[BuildInfoKey](name, homepage)
+buildInfoPackage := "html2pdf"

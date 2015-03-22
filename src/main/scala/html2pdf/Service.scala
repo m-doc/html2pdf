@@ -5,17 +5,14 @@ import org.http4s.Uri
 import org.http4s.dsl._
 import org.http4s.headers._
 import org.http4s.server.HttpService
-import org.http4s.server.blaze.BlazeBuilder
 
-object service extends App {
-
+object Service {
   val rootResponse = {
-    import buildinfo.BuildInfo._
     val redirect = for {
-      url <- homepage
+      url <- BuildInfo.homepage
       uri <- Uri.fromString(url.toString).toOption
     } yield TemporaryRedirect(uri)
-    redirect.getOrElse(Ok(name))
+    redirect.getOrElse(Ok(BuildInfo.name))
   }
 
   val whitelist = Seq(
@@ -35,17 +32,11 @@ object service extends App {
       val param = "url"
       val response = req.params.get(param).map { url =>
         if (whitelist.contains(url))
-          Ok(converter.mkPdf(url))
+          Ok(Converter.mkPdf2(url).mapW(_.entry).drainW(scalaz.stream.io.stdOutLines))
             .withHeaders(`Content-Type`(`application/pdf`))
         else
           BadRequest(s"URL '$url' is not in the whitelist")
       }
       response.getOrElse(BadRequest(s"parameter '$param' is not specified"))
   }
-
-  BlazeBuilder
-    .bindHttp(8080)
-    .mountService(route)
-    .run
-    .awaitShutdown()
 }
