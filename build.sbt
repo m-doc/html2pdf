@@ -1,12 +1,12 @@
 name := "html2pdf-ms"
-
 version := "0.0.1"
+description := "microservice for converting HTML to PDF"
 
 organization := "eu.timepit"
+homepage := Some(url("https://github.com/fthomas/html2pdf-ms"))
 startYear := Some(2015)
 licenses += "GPL-3.0" -> url("http://www.gnu.org/licenses/gpl-3.0.html")
-scmInfo := Some(ScmInfo(url("https://github.com/fthomas/html2pdf-ms"),
-                        "git@github.com:fthomas/html2pdf-ms.git"))
+scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:fthomas/html2pdf-ms.git"))
 
 scalaVersion := "2.11.6"
 scalacOptions ++= Seq(
@@ -47,7 +47,7 @@ enablePlugins(DebianPlugin)
 enablePlugins(JavaServerAppPackaging)
 
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
-packageSummary := "microservice for converting HTML to PDF"
-packageDescription := "See <https://github.com/fthomas/html2pdf-ms> for more information."
+packageSummary := description.value
+packageDescription := s"See <${homepage.value.get}> for more information."
 debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV
