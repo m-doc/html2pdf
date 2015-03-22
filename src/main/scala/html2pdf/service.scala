@@ -8,7 +8,16 @@ import org.http4s.server.HttpService
 import org.http4s.server.blaze.BlazeBuilder
 
 object service extends App {
-  val homepage = Uri.uri("https://github.com/fthomas/html2pdf-ms")
+
+  val rootResponse = {
+    import buildinfo.BuildInfo._
+    val redirect = for {
+      url <- homepage
+      uri <- Uri.fromString(url.toString).toOption
+    } yield TemporaryRedirect(uri)
+    redirect.getOrElse(Ok(name))
+  }
+
   val whitelist = Seq(
     "http://en.wikipedia.org",
     "http://github.com",
@@ -21,7 +30,7 @@ object service extends App {
   )
 
   val route = HttpService {
-    case GET -> Root => TemporaryRedirect(homepage)
+    case GET -> Root => rootResponse
     case req @ GET -> Root / "pdf" =>
       val param = "url"
       val response = req.params.get(param).map { url =>

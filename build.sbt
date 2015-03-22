@@ -42,7 +42,7 @@ initialCommands := """
 
 scalariformSettings
 
-// package settings
+// sbt-native-packager
 enablePlugins(DebianPlugin)
 enablePlugins(JavaServerAppPackaging)
 
@@ -51,3 +51,8 @@ packageSummary := description.value
 packageDescription := s"See <${homepage.value.get}> for more information."
 debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV
+
+// sbt-buildinfo
+buildInfoSettings
+sourceGenerators in Compile <+= buildInfo
+buildInfoKeys := Seq[BuildInfoKey](name, homepage)
