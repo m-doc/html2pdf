@@ -1,12 +1,14 @@
 package html2pdf
 
 import org.http4s.MediaType._
+import org.http4s.Uri
 import org.http4s.dsl._
 import org.http4s.headers._
 import org.http4s.server.HttpService
 import org.http4s.server.blaze.BlazeBuilder
 
 object service extends App {
+  val homepage = Uri.uri("https://github.com/fthomas/html2pdf-ms")
   val whitelist = Seq(
     "http://en.wikipedia.org",
     "http://github.com",
@@ -19,6 +21,7 @@ object service extends App {
   )
 
   val route = HttpService {
+    case GET -> Root => TemporaryRedirect(homepage)
     case req @ GET -> Root / "pdf" =>
       val param = "url"
       val response = req.params.get(param).map { url =>
@@ -31,10 +34,9 @@ object service extends App {
       response.getOrElse(BadRequest(s"parameter '$param' is not specified"))
   }
 
-  val server = BlazeBuilder
+  BlazeBuilder
     .bindHttp(8080)
     .mountService(route)
     .run
-
-  server.awaitShutdown()
+    .awaitShutdown()
 }
