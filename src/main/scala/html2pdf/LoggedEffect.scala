@@ -9,6 +9,11 @@ import scalaz.stream.Process._
 import scalaz.stream.Writer
 
 object LoggedEffect {
+  def createTempFile(prefix: String, suffix: String): Writer[Task, LogEntry, Path] =
+    evalO(Effect.createTempFile(prefix, suffix)).flatMapO { path =>
+      Log.infoW(s"Created temporary file ${path.toString}") ++ emitO(path)
+    }
+
   def deleteFile(path: Path): Writer[Task, LogEntry, Unit] =
     Log.infoW(s"Deleting ${path.toString}") ++
       evalO(Effect.deleteFile(path))
