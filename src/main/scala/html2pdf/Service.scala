@@ -32,7 +32,7 @@ object Service {
       val param = "url"
       val response = req.params.get(param).map { url =>
         if (whitelist.contains(url))
-          Ok(Converter.mkPdf2(url).mapW(_.entry).drainW(scalaz.stream.io.stdOutLines))
+          Ok(Converter.mkPdf(url).drainW(Log.stdoutSink))
             .withHeaders(`Content-Type`(`application/pdf`))
         else
           BadRequest(s"URL '$url' is not in the whitelist")

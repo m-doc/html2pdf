@@ -8,19 +8,22 @@ object Effect {
   def deleteFile(path: Path): Task[Unit] =
     Task.delay(Files.delete(path))
 
-  case class CmdOutput(out: String, err: String, status: Int)
+  case class CmdResult(cmd: String, out: String, err: String, status: Int)
 
-  def execCmd(cmd: String, args: String*): Task[CmdOutput] =
+  def execCmd(cmd: String, args: String*): Task[CmdResult] =
     Task.delay {
       import scala.sys.process._
 
+      def append(sb: StringBuilder)(s: String) = {
+        sb.append(s).append(System.lineSeparator()); ()
+      }
+
       val outBuf = new StringBuilder
       val errBuf = new StringBuilder
-      val logger = ProcessLogger(
-        s => { outBuf.append(s).append("\n"); () },
-        s => { errBuf.append(s).append("\n"); () })
+      val logger = ProcessLogger(append(outBuf), append(errBuf))
 
-      val status = (cmd +: args).!(logger)
-      CmdOutput(outBuf.result(), errBuf.result(), status)
+      val cmdLine = cmd +: args
+      val status = cmdLine.!(logger)
+      CmdResult(cmdLine.mkString(" "), outBuf.result(), errBuf.result(), status)
     }
 }

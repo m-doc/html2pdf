@@ -27,7 +27,6 @@ scalacOptions ++= Seq(
 )
 
 val http4sVersion = "0.6.4"
-
 libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
@@ -36,8 +35,9 @@ libraryDependencies ++= Seq(
 
 resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 
-initialCommands := """
-  import html2pdf._
+val rootPackage = "html2pdf"
+initialCommands := s"""
+  import $rootPackage._
 """
 
 scalariformSettings
@@ -56,4 +56,4 @@ serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.Sys
 buildInfoSettings
 sourceGenerators in Compile <+= buildInfo
 buildInfoKeys := Seq[BuildInfoKey](name, homepage)
-buildInfoPackage := "html2pdf"
+buildInfoPackage := rootPackage
