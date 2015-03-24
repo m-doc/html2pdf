@@ -17,7 +17,7 @@ object StreamUtil {
 
   def readFile(path: Path): Process[Task, ByteVector] = {
     val bufferSize = 8192
-    constant(bufferSize).toSource.through(nio.file.chunkR(path))
+    constant(bufferSize).through(nio.file.chunkR(path))
   }
 
   def runIf[F[_], O](b: Boolean)(p: => Process[F, O]): Process[F, O] =
