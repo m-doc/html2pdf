@@ -9,9 +9,10 @@ import scalaz.stream.Process._
 import scalaz.stream.Writer
 
 object LoggedEffect {
-  def createTempFile(prefix: String, suffix: String): Writer[Task, LogEntry, Path] =
-    evalO(Effect.createTempFile(prefix, suffix)).flatMapO { path =>
-      Log.infoW(s"Created temporary file ${path.toString}") ++ emitO(path)
+  def tempFile(prefix: String, suffix: String): Writer[Task, LogEntry, Path] =
+    eval(Effect.createTempFile(prefix, suffix)).flatMap { path =>
+      val msg = s"Created temporary file ${path.toString}"
+      Log.infoW(msg) ++ emitO(path).onComplete(ignoreO(deleteFile(path)))
     }
 
   def deleteFile(path: Path): Writer[Task, LogEntry, Unit] =
@@ -29,5 +30,4 @@ object LoggedEffect {
     def statusLog = Log.errorW(s"${res.cmd} exited with status ${res.status.toString}")
     emitO(res.out) ++ runIf(res.err.nonEmpty)(errLog) ++ runIf(res.status != 0)(statusLog)
   }
-
 }
