@@ -10,7 +10,7 @@ import scalaz.stream.Writer
 
 object LoggedEffect {
   def tempFile(prefix: String, suffix: String): Writer[Task, LogEntry, Path] =
-    eval(Effect.createTempFile(prefix, suffix)).flatMap { path =>
+    await(Effect.createTempFile(prefix, suffix)) { path =>
       val msg = s"Created temporary file ${path.toString}"
       Log.infoW(msg) ++ emitO(path).onComplete(ignoreO(deleteFile(path)))
     }
@@ -22,7 +22,7 @@ object LoggedEffect {
   def execCmd(cmd: String, args: String*): Writer[Task, LogEntry, String] = {
     val cmdLine = (cmd +: args).mkString(" ")
     Log.infoW(s"Executing $cmdLine") ++
-      eval(Effect.execCmd(cmd, args: _*)).flatMap(logCmdResult)
+      await(Effect.execCmd(cmd, args: _*))(logCmdResult)
   }
 
   def logCmdResult(res: Effect.CmdResult): Writer[Nothing, LogEntry, String] = {
