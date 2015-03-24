@@ -18,14 +18,16 @@ object LoggedEffect {
     Log.infoW(s"Deleting ${path.toString}") ++
       evalO(Effect.deleteFile(path))
 
-  def logCmdResult(res: Effect.CmdResult): Writer[Nothing, LogEntry, String] =
-    emitO(res.out) ++
-      runIf(res.err.nonEmpty)(Log.errorW(res.err)) ++
-      runIf(res.status != 0)(Log.errorW(s"${res.cmd} exited with status ${res.status.toString}"))
-
   def execCmd(cmd: String, args: String*): Writer[Task, LogEntry, String] = {
     val cmdLine = (cmd +: args).mkString(" ")
     Log.infoW(s"Executing $cmdLine") ++
       eval(Effect.execCmd(cmd, args: _*)).flatMap(logCmdResult)
   }
+
+  def logCmdResult(res: Effect.CmdResult): Writer[Nothing, LogEntry, String] = {
+    def errLog = Log.warnW(res.err)
+    def statusLog = Log.errorW(s"${res.cmd} exited with status ${res.status.toString}")
+    emitO(res.out) ++ runIf(res.err.nonEmpty)(errLog) ++ runIf(res.status != 0)(statusLog)
+  }
+
 }
