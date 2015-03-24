@@ -8,7 +8,7 @@ import scodec.bits.ByteVector
 
 import scalaz.concurrent.Task
 import scalaz.stream.Process._
-import scalaz.stream._
+import scalaz.stream.Writer
 
 object Converter {
   def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
@@ -20,9 +20,4 @@ object Converter {
   def execWkHtmlToPdf(input: String, output: Path): Writer[Task, LogEntry, Nothing] =
     execCmd("wkhtmltopdf-h2p.sh", input, output.toString)
       .flatMapO(Log.infoW)
-
-  def readFile(path: Path): Process[Task, ByteVector] = {
-    val bufferSize = 8192
-    constant(bufferSize).toSource.through(nio.file.chunkR(path))
-  }
 }

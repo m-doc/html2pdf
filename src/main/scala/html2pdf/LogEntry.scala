@@ -20,7 +20,9 @@ case object Debug extends LogLevel
 case object Warn extends LogLevel
 case object Error extends LogLevel
 
-case class LogEntry(entry: String, level: LogLevel)
+case class LogEntry(entry: String, level: LogLevel) {
+  def format: String = level.toUpperCase + ": " + entry
+}
 
 object Log {
   def info(msg: String): LogEntry = LogEntry(msg, Info)
@@ -36,6 +38,6 @@ object Log {
   def stdoutSink: Sink[Task, LogEntry] =
     io.stdOutLines.contramap { log: LogEntry =>
       val ts = new Date().toString
-      s"[$ts] ${log.level.toUpperCase}: ${log.entry}"
+      s"[$ts] ${log.format}"
     }
 }
