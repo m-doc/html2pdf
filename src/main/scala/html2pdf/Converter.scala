@@ -11,12 +11,11 @@ import scalaz.stream.Process._
 import scalaz.stream._
 
 object Converter {
-  def createPdf(url: String): Writer[Task, LogEntry, ByteVector] = {
+  def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
     Log.infoW(s"Converting $url") ++
       LoggedEffect.tempFile("h2p-", ".pdf").flatMapO { pdf =>
         execWkHtmlToPdf(url, pdf) ++ liftW(readFile(pdf))
       }
-  }
 
   def execWkHtmlToPdf(input: String, output: Path): Writer[Task, LogEntry, Nothing] =
     execCmd("wkhtmltopdf-h2p.sh", input, output.toString)
