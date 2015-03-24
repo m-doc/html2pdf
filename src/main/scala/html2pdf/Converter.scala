@@ -13,11 +13,8 @@ import scalaz.stream._
 object Converter {
   def createPdf(url: String): Writer[Task, LogEntry, ByteVector] = {
     Log.infoW(s"Converting $url") ++
-      LoggedEffect.createTempFile("h2p-", ".pdf").flatMapO { pdf =>
-        val make = execWkHtmlToPdf(url, pdf)
-        val read = liftW(readFile(pdf))
-        val delete = ignoreO(LoggedEffect.deleteFile(pdf))
-        (make ++ read).onComplete(delete)
+      LoggedEffect.tempFile("h2p-", ".pdf").flatMapO { pdf =>
+        execWkHtmlToPdf(url, pdf) ++ liftW(readFile(pdf))
       }
   }
 
