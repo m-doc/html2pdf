@@ -40,6 +40,7 @@ initialCommands := s"""
   import $rootPackage._
 """
 
+Revolver.settings
 scalariformSettings
 
 // sbt-native-packager
