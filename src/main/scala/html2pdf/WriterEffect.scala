@@ -34,7 +34,7 @@ object WriterEffect {
 
   def execWkHtmlToPdf(input: String, output: Path): Writer[Task, LogEntry, Nothing] =
     execCmd("wkhtmltopdf-h2p.sh", input, output.toString)
-      .flatMapO(Log.infoW)
+      .flatMapO(out => runIf(out.trim.nonEmpty)(Log.infoW(out)))
 
   def tempFile(prefix: String, suffix: String): Writer[Task, LogEntry, Path] =
     await(Effect.createTempFile(prefix, suffix)) { path =>
