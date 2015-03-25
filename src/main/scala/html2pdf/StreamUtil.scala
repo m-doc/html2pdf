@@ -10,7 +10,7 @@ import scalaz.stream._
 
 object StreamUtil {
   def evalO[F[_], O](f: F[O]): Writer[F, Nothing, O] =
-    liftW(eval(f))
+    await(f)(emitO)
 
   def ignoreO[F[_], W, O](p: Writer[F, W, O]): Writer[F, W, Nothing] =
     p.flatMapO(_ => halt)

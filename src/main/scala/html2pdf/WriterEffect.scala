@@ -9,9 +9,9 @@ import scalaz.concurrent.Task
 import scalaz.stream.Process._
 import scalaz.stream.Writer
 
-object LoggedEffect {
+object WriterEffect {
   def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
-    Log.infoW(s"C  onverting $url") ++
+    Log.infoW(s"Converting $url") ++
       tempFile("h2p-", ".pdf").flatMapO { pdf =>
         execWkHtmlToPdf(url, pdf) ++ liftW(readFile(pdf))
       }

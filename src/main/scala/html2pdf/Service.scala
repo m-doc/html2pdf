@@ -32,7 +32,7 @@ object Service {
       val param = "url"
       val response = req.params.get(param).map { url =>
         if (whitelist.contains(url))
-          Ok(LoggedEffect.createPdf(url).drainW(Log.stdoutSink))
+          Ok(WriterEffect.createPdf(url).drainW(Log.stdoutSink))
             .withHeaders(`Content-Type`(`application/pdf`))
         else
           BadRequest(s"URL '$url' is not in the whitelist")
