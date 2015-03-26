@@ -40,7 +40,7 @@ object WriterEffect {
 
   def readFile(path: Path): Writer[Task, LogEntry, ByteVector] = {
     val bufferSize = 8192
-    Log.infoW("Reading file ${path.toString}") ++
+    Log.infoW(s"Reading file ${path.toString}") ++
       liftW(constant(bufferSize).through(nio.file.chunkR(path)))
   }
 
