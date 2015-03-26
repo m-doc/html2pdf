@@ -1,10 +1,5 @@
 package html2pdf
 
-import java.nio.file.Path
-
-import scodec.bits.ByteVector
-
-import scalaz.concurrent.Task
 import scalaz.stream.Process._
 import scalaz.stream._
 
