@@ -13,7 +13,7 @@ object WriterEffect {
   def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
     Log.infoW(s"Converting $url") ++
       tempFile("h2p-", ".pdf").flatMapO { pdf =>
-        execWkHtmlToPdf(url, pdf) ++ liftW(readFile(pdf))
+        execWkHtmlToPdf(url, pdf) ++ readFile(pdf)
       }
 
   def deleteFile(path: Path): Writer[Task, LogEntry, Unit] =
@@ -37,6 +37,12 @@ object WriterEffect {
       val trimmed = out.trim
       runIf(trimmed.nonEmpty)(Log.infoW(trimmed))
     }
+
+  def readFile(path: Path): Writer[Task, LogEntry, ByteVector] = {
+    val bufferSize = 8192
+    Log.infoW("Reading file ${path.toString}") ++
+      liftW(constant(bufferSize).through(nio.file.chunkR(path)))
+  }
 
   def tempFile(prefix: String, suffix: String): Writer[Task, LogEntry, Path] =
     await(Effect.createTempFile(prefix, suffix)) { path =>
