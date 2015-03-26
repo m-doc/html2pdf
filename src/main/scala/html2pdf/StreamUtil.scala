@@ -15,11 +15,6 @@ object StreamUtil {
   def ignoreO[F[_], W, O](p: Writer[F, W, O]): Writer[F, W, Nothing] =
     p.flatMapO(_ => halt)
 
-  def readFile(path: Path): Process[Task, ByteVector] = {
-    val bufferSize = 8192
-    constant(bufferSize).through(nio.file.chunkR(path))
-  }
-
   def runIf[F[_], O](b: Boolean)(p: => Process[F, O]): Process[F, O] =
     if (b) p else halt
 }
