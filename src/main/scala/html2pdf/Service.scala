@@ -8,11 +8,8 @@ import org.http4s.server.HttpService
 
 object Service {
   val rootResponse = {
-    val redirect = for {
-      url <- BuildInfo.homepage
-      uri <- Uri.fromString(url.toString).toOption
-    } yield TemporaryRedirect(uri)
-    redirect.getOrElse(Ok(BuildInfo.name))
+    import BuildInfo._
+    Uri.fromString(homepage).fold(_ => Ok(name), TemporaryRedirect(_))
   }
 
   val whitelist = Seq(

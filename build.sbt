@@ -56,5 +56,8 @@ serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.Sys
 // sbt-buildinfo
 buildInfoSettings
 sourceGenerators in Compile <+= buildInfo
-buildInfoKeys := Seq[BuildInfoKey](name, homepage)
+buildInfoKeys := Seq[BuildInfoKey](
+  name,
+  BuildInfoKey.map(homepage) { case (k, v) => k -> v.get.toString }
+)
 buildInfoPackage := rootPackage
