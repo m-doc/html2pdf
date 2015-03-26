@@ -7,7 +7,7 @@ import scodec.bits.ByteVector
 
 import scalaz.concurrent.Task
 import scalaz.stream.Process._
-import scalaz.stream.Writer
+import scalaz.stream._
 
 object WriterEffect {
   def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
