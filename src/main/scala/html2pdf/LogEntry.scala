@@ -1,28 +1,12 @@
 package html2pdf
 
-import java.util.Date
+import html2pdf.StreamUtil._
+import html2pdf.logging._
+import scodec.bits.ByteVector
+
 import scalaz.concurrent.Task
 import scalaz.stream.Process.emitW
 import scalaz.stream._
-
-sealed trait LogLevel {
-  def toUpperCase: String =
-    this match {
-      case Info => "INFO"
-      case Debug => "DEBUG"
-      case Warn => "WARN"
-      case Error => "ERROR"
-    }
-}
-
-case object Info extends LogLevel
-case object Debug extends LogLevel
-case object Warn extends LogLevel
-case object Error extends LogLevel
-
-case class LogEntry(entry: String, level: LogLevel) {
-  def format: String = level.toUpperCase + ": " + entry
-}
 
 object Log {
   def info(msg: String): LogEntry = LogEntry(msg, Info)
@@ -36,8 +20,8 @@ object Log {
   def errorW(msg: String): Writer[Nothing, LogEntry, Nothing] = emitW(error(msg))
 
   def stdoutSink: Sink[Task, LogEntry] =
-    io.stdOutLines.contramap { log: LogEntry =>
-      val ts = new Date().toString
-      s"[$ts] ${log.format}"
-    }
+    io.stdOutLines.contramapEval(_.format)
+
+  def fileSink(f: String): Sink[Task, LogEntry] =
+    nio.file.chunkW(f).contramapEval(_.format.map(s => ByteVector.view(s.getBytes)))
 }

@@ -29,7 +29,9 @@ object Service {
       val param = "url"
       val response = req.params.get(param).map { url =>
         if (whitelist.contains(url))
-          Ok(WriterEffect.createPdf(url).drainW(Log.stdoutSink))
+          Ok(WriterEffect.createPdf(url).onFailure(cause => Log.errorW(cause.toString))
+            .observeW(Log.stdoutSink)
+            .drainW(Log.fileSink("logs/html2pdf-ms.log")).onFailure(c => { c.printStackTrace(); scalaz.stream.Process.halt }))
             .withHeaders(`Content-Type`(`application/pdf`))
         else
           BadRequest(s"URL '$url' is not in the whitelist")
