@@ -1,15 +1,25 @@
 package html2pdf
 
+import java.nio.file.Paths
+
+import html2pdf.BuildInfo._
+import html2pdf.logging.LogEntry
+import html2pdf.logging.LogSink._
 import org.http4s.MediaType._
 import org.http4s.Uri
 import org.http4s.dsl._
 import org.http4s.headers._
 import org.http4s.server.HttpService
+import scodec.bits.ByteVector
+
+import scalaz.concurrent.Task
+import scalaz.stream.Process
 
 object Service {
-  val rootResponse = {
-    import BuildInfo._
-    Uri.fromString(homepage).fold(_ => Ok(name), TemporaryRedirect(_))
+  def pdfSource(url: String, remoteAddr: Option[String]): Process[Task, ByteVector] = {
+    val logFile = Paths.get("logs", name)
+    (remoteAddr.fold(Process.halt: scalaz.stream.Writer[Nothing, LogEntry, Nothing])(r => logging.LogEntry.infoW(s"from $r")) ++
+      WriterEffect.createPdf(url)).drainW(stdoutAndFileSink(logFile))
   }
 
   val whitelist = Seq(
@@ -24,14 +34,14 @@ object Service {
   )
 
   val route = HttpService {
-    case GET -> Root => rootResponse
+    case GET -> Root =>
+      Uri.fromString(homepage).fold(_ => Ok(name), TemporaryRedirect(_))
+
     case req @ GET -> Root / "pdf" =>
       val param = "url"
       val response = req.params.get(param).map { url =>
         if (whitelist.contains(url))
-          Ok(WriterEffect.createPdf(url).onFailure(cause => Log.errorW(cause.toString))
-            .observeW(Log.stdoutSink)
-            .drainW(Log.fileSink("logs/html2pdf-ms.log")).onFailure(c => { c.printStackTrace(); scalaz.stream.Process.halt }))
+          Ok(pdfSource(url, req.remoteAddr))
             .withHeaders(`Content-Type`(`application/pdf`))
         else
           BadRequest(s"URL '$url' is not in the whitelist")

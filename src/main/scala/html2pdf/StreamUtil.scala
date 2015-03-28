@@ -11,6 +11,11 @@ object StreamUtil {
       self.map(g => f.andThen(_.flatMap(g)))
   }
 
+  implicit class MySinkSyntax[F[_], O](val self: Sink[F, O]) extends AnyVal {
+    def combine(other: Sink[F, O])(implicit F: Bind[F]): Sink[F, O] =
+      self.zipWith(other)((f, g) => o => f(o) >> g(o))
+  }
+
   implicit class MyWriterSyntax[F[_], W, O](val self: Writer[F, W, O]) extends AnyVal {
     def ignoreO: Writer[F, W, Nothing] =
       self.flatMapO(_ => halt)

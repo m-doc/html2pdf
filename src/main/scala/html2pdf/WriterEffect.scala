@@ -2,9 +2,9 @@ package html2pdf
 
 import java.nio.file.Path
 
-import html2pdf.Log._
 import html2pdf.StreamUtil._
 import html2pdf.logging.LogEntry
+import html2pdf.logging.LogEntry._
 import scodec.bits.ByteVector
 
 import scalaz.concurrent.Task
@@ -23,9 +23,9 @@ object WriterEffect {
       evalO(Effect.deleteFile(path))
 
   def emitCmdResult(res: Effect.CmdResult): Writer[Nothing, LogEntry, String] = {
-    def errLog = warnW(res.err)
-    def statusLog = errorW(s"${res.cmd} exited with status ${res.status.toString}")
-    emitO(res.out) ++ runIf(res.err.nonEmpty)(errLog) ++ runIf(res.status != 0)(statusLog)
+    def logErr = warnW(res.err)
+    def logStatus = errorW(s"${res.cmd} exited with status ${res.status.toString}")
+    emitO(res.out) ++ runIf(res.err.nonEmpty)(logErr) ++ runIf(res.status != 0)(logStatus)
   }
 
   def execCmd(cmd: String, args: String*): Writer[Task, LogEntry, String] = {
