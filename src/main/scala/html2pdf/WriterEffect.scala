@@ -12,7 +12,10 @@ import scalaz.stream.Process._
 import scalaz.stream._
 
 object WriterEffect {
-  def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
+  type LogWriter[F[_], O] = Writer[F, LogEntry, O]
+  
+  //def createPdf(url: String): Writer[Task, LogEntry, ByteVector] =
+  def createPdf(url: String): LogWriter[Task, ByteVector] =
     infoW(s"Converting $url") ++
       tempFile("h2p-", ".pdf").flatMapO { pdf =>
         execWkHtmlToPdf(url, pdf) ++ readFile(pdf)
