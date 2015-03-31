@@ -17,7 +17,7 @@ import scalaz.stream.Process
 
 object Service {
   def pdfSource(url: String, remoteAddr: Option[String]): Process[Task, ByteVector] = {
-    val logFile = Paths.get("logs", name)
+    val logFile = Paths.get(s"logs/$name.log")
     (remoteAddr.fold(Process.halt: scalaz.stream.Writer[Nothing, LogEntry, Nothing])(r => logging.LogEntry.infoW(s"from $r")) ++
       WriterEffect.createPdf(url)).drainW(stdoutAndFileSink(logFile))
   }
@@ -38,6 +38,9 @@ object Service {
       Uri.fromString(homepage).fold(_ => Ok(name), TemporaryRedirect(_))
 
     case req @ GET -> Root / "pdf" =>
+      println(req)
+      println(req.uri.renderString)
+      println(req.method.name)
       val param = "url"
       val response = req.params.get(param).map { url =>
         if (whitelist.contains(url))
