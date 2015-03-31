@@ -17,7 +17,7 @@ object LogSink {
 
   def fileSink(path: Path): Sink[Task, LogEntry] = {
     //eval(Effect.createParentDirectories(path)).flatMap { _ =>
-    nio.file.chunkW(path).contramapEval {
+    nio.file.chunkW(path).compose {
       _.format.map { msg =>
         val line = msg + System.lineSeparator()
         ByteVector.view(line.getBytes("UTF-8"))
@@ -27,5 +27,5 @@ object LogSink {
   //}
 
   def stdoutSink: Sink[Task, LogEntry] =
-    io.stdOutLines.contramapEval(_.format)
+    io.stdOutLines.compose(_.format)
 }

@@ -7,7 +7,10 @@ import scalaz.syntax.bind._
 
 object StreamUtil {
   implicit class MyChannelSyntax[F[_], I, O](val self: Channel[F, I, O]) extends AnyVal {
-    def contramapEval[I0](f: I0 => F[I])(implicit F: Bind[F]): Channel[F, I0, O] =
+    def andThen[O2](f: O => F[O2])(implicit F: Bind[F]): Channel[F, I, O2] =
+      self.map(g => g.andThen(_.flatMap(f)))
+
+    def compose[I0](f: I0 => F[I])(implicit F: Bind[F]): Channel[F, I0, O] =
       self.map(g => f.andThen(_.flatMap(g)))
   }
 
