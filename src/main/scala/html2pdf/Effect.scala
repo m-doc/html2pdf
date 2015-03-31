@@ -1,6 +1,6 @@
 package html2pdf
 
-import java.nio.file.{Files, Path}
+import java.nio.file.{ Files, Path }
 
 import scala.sys.process._
 import scalaz.concurrent.Task

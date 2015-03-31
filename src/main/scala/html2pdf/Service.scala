@@ -18,7 +18,7 @@ import scalaz.stream.Process
 object Service {
   def pdfSource(url: String, remoteAddr: Option[String]): Process[Task, ByteVector] = {
     val logFile = Paths.get(s"logs/$name.log")
-    (remoteAddr.fold(Process.halt: scalaz.stream.Writer[Nothing, LogEntry, Nothing])(r => logging.LogEntry.infoW(s"from $r")) ++
+    (remoteAddr.fold(Process.halt: scalaz.stream.Writer[Nothing, LogEntry, Nothing])(r => logging.Log.info(s"from $r")) ++
       WriterEffect.createPdf(url)).drainW(stdoutAndFileSink(logFile))
   }
 
