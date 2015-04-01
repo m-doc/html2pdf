@@ -50,7 +50,7 @@ enablePlugins(JavaServerAppPackaging)
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
 packageSummary := description.value
 packageDescription := s"See <${homepage.value.get}> for more information."
-debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb")
+debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb", "logrotate")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV
 
 // sbt-buildinfo
