@@ -26,7 +26,7 @@ scalacOptions ++= Seq(
   "-Ywarn-value-discard"
 )
 
-val http4sVersion = "0.6.4"
+val http4sVersion = "0.6.5"
 libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
