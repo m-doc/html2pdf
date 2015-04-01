@@ -15,7 +15,7 @@ object Log {
 
   def error(msg: String): LogWriter[Nothing, Nothing] =
     emitLog(msg, Error)
-    
+
   private def emitLog(msg: String, level: LogLevel): LogWriter[Nothing, Nothing] =
     Process.emitW(LogEntry(msg, level))
 }

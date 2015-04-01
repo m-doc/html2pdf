@@ -22,22 +22,19 @@ object WriterEffect {
       StreamUtil.evalO(Effect.deleteFile(path))
 
   def emitCmdResult(res: Effect.CmdResult): LogWriter[Nothing, String] = {
-    def logErr = Log.warn(res.err)
+    def logError = Log.warn(res.err)
     def logStatus = Log.error(s"${res.cmd} exited with status ${res.status.toString}")
+
     Process.emitO(res.out) ++
-      StreamUtil.runIf(res.err.nonEmpty)(logErr) ++
+      StreamUtil.runIf(res.err.nonEmpty)(logError) ++
       StreamUtil.runIf(res.status != 0)(logStatus)
   }
 
   def emitRequest(req: Request): LogWriter[Nothing, Nothing] = {
-    /*
     val method = req.method.renderString
     val uri = req.uri.renderString
-    val remote = req.remoteAddr.fold("")(" from " + _)
-
-    infoW(s"$method $uri")
-    */
-    ???
+    val remote = req.remoteAddr.getOrElse("unknown")
+    Log.info(s"$method $uri from $remote")
   }
 
   def execCmd(cmd: String, args: String*): LogWriter[Task, String] = {
