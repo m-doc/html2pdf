@@ -1,1 +1,3 @@
 -J-Xms128m -J-Xmx256m
+
+-DHTTP_PORT=4040
