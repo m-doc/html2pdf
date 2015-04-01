@@ -49,11 +49,9 @@ object WriterEffect {
       StreamUtil.runIf(trimmed.nonEmpty)(Log.info(trimmed))
     }
 
-  def readFile(path: Path): LogWriter[Task, ByteVector] = {
-    val bufferSize = 8192
+  def readFile(path: Path): LogWriter[Task, ByteVector] =
     Log.info(s"Reading file ${path.toString}") ++
       Process.liftW(Process.constant(bufferSize).through(nio.file.chunkR(path)))
-  }
 
   def tempFile(prefix: String, suffix: String): LogWriter[Task, Path] =
     Process.await(Effect.createTempFile(prefix, suffix)) { path =>

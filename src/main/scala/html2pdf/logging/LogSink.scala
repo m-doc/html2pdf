@@ -1,8 +1,8 @@
-package html2pdf.logging
+package html2pdf
+package logging
 
 import java.nio.file.Path
 
-import html2pdf.Effect
 import html2pdf.StreamUtil._
 import scodec.bits.ByteVector
 
@@ -16,7 +16,7 @@ object LogSink {
 
   def fileSink(path: Path): Sink[Task, LogEntry] = {
     eval(Effect.createParentDirectories(path)).flatMap { _ =>
-      io.fileChunkW(path.toString, 4096, append = true).compose {
+      io.fileChunkW(path.toString, bufferSize, append = true).compose {
         _.format.map { msg =>
           val line = msg + System.lineSeparator()
           ByteVector.view(line.getBytes("UTF-8"))
