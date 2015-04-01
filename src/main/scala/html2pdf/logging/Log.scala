@@ -5,17 +5,17 @@ import scalaz.stream.Process
 
 object Log {
   def info(msg: String): LogWriter[Nothing, Nothing] =
-    emitLog(msg, Info)
+    emitL(msg, Info)
 
   def debug(msg: String): LogWriter[Nothing, Nothing] =
-    emitLog(msg, Debug)
+    emitL(msg, Debug)
 
   def warn(msg: String): LogWriter[Nothing, Nothing] =
-    emitLog(msg, Warn)
+    emitL(msg, Warn)
 
   def error(msg: String): LogWriter[Nothing, Nothing] =
-    emitLog(msg, Error)
+    emitL(msg, Error)
 
-  private def emitLog(msg: String, level: LogLevel): LogWriter[Nothing, Nothing] =
+  private def emitL(msg: String, level: LogLevel): LogWriter[Nothing, Nothing] =
     Process.emitW(LogEntry(msg, level))
 }
