@@ -4,8 +4,8 @@ import org.http4s.server.blaze.BlazeBuilder
 
 object BlazeServer extends App {
   val httpPort = Effect.getProperty("HTTP_PORT").map { prop =>
-    val default = 8080
-    prop.map(_.fold(default)(_.toInt))
+    val defaultPort = 8080
+    prop.fold(defaultPort)(_.toInt)
   }
 
   val server = httpPort.flatMap { port =>
