@@ -45,18 +45,19 @@ scalariformSettings
 
 // sbt-native-packager
 enablePlugins(JavaServerAppPackaging)
-
-// deb settings
-enablePlugins(DebianPlugin)
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
 packageSummary := description.value
 packageDescription := s"See <${homepage.value.get}> for more information."
+
+// deb settings
+enablePlugins(DebianPlugin)
 debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb", "logrotate")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV
 
 // rpm settings
 enablePlugins(RpmPlugin)
-rpmVendor := maintainer.value
+rpmVendor := organization.value
+rpmLicense := licenses.value.headOption.map(_._1)
 
 // sbt-buildinfo
 buildInfoSettings
@@ -66,3 +67,5 @@ buildInfoKeys := Seq[BuildInfoKey](
   BuildInfoKey.map(homepage) { case (k, v) => k -> v.get.toString }
 )
 buildInfoPackage := rootPackage
+
+addCommandAlias("validate", ";test;debian:packageBin;rpm:packageBin")

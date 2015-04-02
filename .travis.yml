@@ -2,7 +2,7 @@ language: scala
 scala:
  - 2.11.6
 script:
- - sbt ++$TRAVIS_SCALA_VERSION test debian:packageBin
+ - sbt ++$TRAVIS_SCALA_VERSION validate
 jdk:
  - openjdk7
  - oraclejdk7
