@@ -44,14 +44,19 @@ Revolver.settings
 scalariformSettings
 
 // sbt-native-packager
-enablePlugins(DebianPlugin)
 enablePlugins(JavaServerAppPackaging)
 
+// deb settings
+enablePlugins(DebianPlugin)
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
 packageSummary := description.value
 packageDescription := s"See <${homepage.value.get}> for more information."
 debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb", "logrotate")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV
+
+// rpm settings
+enablePlugins(RpmPlugin)
+rpmVendor := maintainer.value
 
 // sbt-buildinfo
 buildInfoSettings
