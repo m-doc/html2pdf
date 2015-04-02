@@ -37,4 +37,7 @@ object Effect {
       CmdResult(cmdLine.mkString(" "), outBuf.result(), errBuf.result(), status)
     }
   }
+
+  def getProperty(key: String): Task[Option[String]] =
+    Task.delay(Option(System.getProperty(key)))
 }
