@@ -38,10 +38,9 @@ object Service {
       }
   }
 
-  def pdfSource(url: String, req: Request): Process[Task, ByteVector] = {
+  def pdfSource(url: String): Process[Task, ByteVector] = {
     val logFile = Paths.get(s"logs/$name.log")
-    (WriterEffect.emitRequest(req) ++ WriterEffect.createPdf(url))
-      .drainW(stdoutAndFileSink(logFile))
+    WriterEffect.createPdf(url).drainW(stdoutAndFileSink(logFile))
   }
 
   val route = HttpService {
@@ -50,7 +49,6 @@ object Service {
 
     case req @ GET -> Root / "pdf" =>
       extractUrl(req).fold(BadRequest(_),
-        url => Ok(pdfSource(url, req))
-          .withHeaders(`Content-Type`(`application/pdf`)))
+        url => Ok(pdfSource(url)).withHeaders(`Content-Type`(`application/pdf`)))
   }
 }

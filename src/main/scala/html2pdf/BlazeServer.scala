@@ -1,19 +1,24 @@
 package html2pdf
 
+import org.http4s.server.Server
 import org.http4s.server.blaze.BlazeBuilder
 
-object BlazeServer extends App {
-  val httpPort = Effect.getProperty("HTTP_PORT").map { prop =>
-    val defaultPort = 8080
-    prop.fold(defaultPort)(_.toInt)
-  }
+import scalaz.concurrent.Task
 
-  val server = httpPort.flatMap { port =>
-    BlazeBuilder
-      .bindHttp(port)
-      .mountService(Service.route)
-      .start
-  }
+object BlazeServer extends App {
+  val httpPort: Task[Int] =
+    Effect.getPropertyAsInt("HTTP_PORT").map { port =>
+      val defaultPort = 8080
+      port.getOrElse(defaultPort)
+    }
+
+  val server: Task[Server] =
+    httpPort.flatMap { port =>
+      BlazeBuilder
+        .bindHttp(port)
+        .mountService(Service.route)
+        .start
+    }
 
   server.run.awaitShutdown()
 }

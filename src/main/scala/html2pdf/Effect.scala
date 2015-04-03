@@ -38,6 +38,9 @@ object Effect {
     }
   }
 
-  def getProperty(key: String): Task[Option[String]] =
+  def getPropertyAsInt(key: String): Task[Option[Int]] =
+    getPropertyAsString(key).map(_.map(_.toInt))
+
+  def getPropertyAsString(key: String): Task[Option[String]] =
     Task.delay(Option(System.getProperty(key)))
 }

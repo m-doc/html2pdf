@@ -4,7 +4,6 @@ import java.nio.file.Path
 
 import html2pdf.StreamUtil._
 import html2pdf.logging.Log
-import org.http4s.Request
 import scodec.bits.ByteVector
 
 import scalaz.concurrent.Task
@@ -28,13 +27,6 @@ object WriterEffect {
     Process.emitO(res.out) ++
       StreamUtil.runIf(res.err.nonEmpty)(logError) ++
       StreamUtil.runIf(res.status != 0)(logStatus)
-  }
-
-  def emitRequest(req: Request): LogWriter[Nothing, Nothing] = {
-    val method = req.method.renderString
-    val uri = req.uri.renderString
-    val remote = req.remoteAddr.getOrElse("unknown")
-    Log.info(s"$method $uri from $remote")
   }
 
   def execCmd(cmd: String, args: String*): LogWriter[Task, String] = {
