@@ -8,9 +8,9 @@ It is built on top of [wkhtmltopdf][wkhtmltopdf] for the conversion to PDF and
 of [http4s][http4s] and [scalaz-stream][scalaz-stream] for serving them over
 HTTP. Here are some live examples of webpages converted to PDF:
 
-* http://html2pdf.timepit.eu/pdf?url=http://en.wikipedia.org
-* http://html2pdf.timepit.eu/pdf?url=http://google.com
-* http://html2pdf.timepit.eu/pdf?url=http://reddit.com
+* http://html2pdf.timepit.eu/pdf/wikipedia.pdf?url=http://en.wikipedia.org
+* http://html2pdf.timepit.eu/pdf/google.pdf?url=http://google.com
+* http://html2pdf.timepit.eu/pdf/reddit.pdf?url=http://reddit.com
 
 [http4s]: http://http4s.org
 [scalaz-stream]: https://github.com/scalaz/scalaz-stream
