@@ -58,6 +58,7 @@ serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.Sys
 enablePlugins(RpmPlugin)
 rpmVendor := organization.value
 rpmLicense := licenses.value.headOption.map(_._1)
+rpmGroup := Some("System Environment/Daemons")
 
 // sbt-buildinfo
 buildInfoSettings
