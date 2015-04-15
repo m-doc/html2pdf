@@ -59,6 +59,7 @@ enablePlugins(RpmPlugin)
 rpmVendor := organization.value
 rpmLicense := licenses.value.headOption.map(_._1)
 rpmGroup := Some("System Environment/Daemons")
+rpmBrpJavaRepackJars := true
 
 // sbt-buildinfo
 buildInfoSettings
