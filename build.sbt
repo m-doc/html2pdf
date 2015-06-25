@@ -8,7 +8,7 @@ startYear := Some(2015)
 licenses += "GPL-3.0" -> url("http://www.gnu.org/licenses/gpl-3.0.html")
 scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:fthomas/html2pdf-ms.git"))
 
-scalaVersion := "2.11.6"
+scalaVersion := "2.11.7"
 scalacOptions ++= Seq(
   "-deprecation",
   "-encoding", "UTF-8",
