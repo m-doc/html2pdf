@@ -70,4 +70,4 @@ buildInfoKeys := Seq[BuildInfoKey](
 )
 buildInfoPackage := rootPackage
 
-addCommandAlias("validate", ";test;debian:packageBin;rpm:packageBin")
+addCommandAlias("validate", ";coverage;test;debian:packageBin;rpm:packageBin")

@@ -9,3 +9,5 @@ jdk:
 before_install:
  - sudo apt-get update -qq
  - sudo apt-get install -y rpm
+after_success:
+ - bash <(curl -s https://codecov.io/bash)
