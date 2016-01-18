@@ -16,3 +16,4 @@ HTTP. Here are some live examples of webpages converted to PDF:
 [http4s]: http://http4s.org
 [scalaz-stream]: https://github.com/scalaz/scalaz-stream
 [wkhtmltopdf]: http://wkhtmltopdf.org
+;
