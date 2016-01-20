@@ -1,10 +1,10 @@
 # html2pdf-ms
 
-[![Build Status](https://travis-ci.org/m-doc/html2pdf-ms.svg?branch=master)](https://travis-ci.org/m-doc/html2pdf-ms)
-[![codecov.io](https://codecov.io/github/m-doc/html2pdf-ms/coverage.svg?branch=master)](https://codecov.io/github/m-doc/html2pdf-ms?branch=master)
+[![Build Status](https://travis-ci.org/m-doc/html2pdf.svg?branch=master)](https://travis-ci.org/m-doc/html2pdf)
+[![codecov.io](https://codecov.io/github/m-doc/html2pdf/coverage.svg?branch=master)](https://codecov.io/github/m-doc/html2pdf?branch=master)
 [![Codacy Badge](https://www.codacy.com/project/badge/f6e5369821064b7d96e0bda990e480ad)](https://www.codacy.com/app/fthomas/html2pdf-ms)
 
-**html2pdf-ms** is a purely functional microservice for converting HTML to PDF.
+**html2pdf** is a purely functional microservice for converting HTML to PDF.
 It is built on top of [wkhtmltopdf][wkhtmltopdf] for the conversion to PDF and
 of [http4s][http4s] and [scalaz-stream][scalaz-stream] for serving them over
 HTTP. Here are some live examples of webpages converted to PDF:
