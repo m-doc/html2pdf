@@ -1,14 +1,12 @@
 package html2pdf
 package logging
 
-import java.nio.file.Path
-
 import html2pdf.StreamUtil._
-import scodec.bits.ByteVector
-
+import java.nio.file.Path
 import scalaz.concurrent.Task
-import scalaz.stream.Process._
 import scalaz.stream._
+import scalaz.stream.Process._
+import scodec.bits.ByteVector
 
 object LogSink {
   def stdoutAndFileSink(path: Path): Sink[Task, LogEntry] =

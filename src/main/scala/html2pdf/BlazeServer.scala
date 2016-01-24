@@ -2,7 +2,6 @@ package html2pdf
 
 import org.http4s.server.Server
 import org.http4s.server.blaze.BlazeBuilder
-
 import scalaz.concurrent.Task
 
 object BlazeServer extends App {

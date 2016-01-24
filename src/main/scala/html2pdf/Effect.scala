@@ -1,7 +1,6 @@
 package html2pdf
 
 import java.nio.file.{ Files, Path }
-
 import scala.sys.process._
 import scalaz.concurrent.Task
 
@@ -9,8 +8,8 @@ object Effect {
   def createParentDirectories(path: Path): Task[Path] =
     Task.delay {
       val parent = path.getParent
-      if (Files.isDirectory(parent)) parent
-      else Files.createDirectories(parent)
+      if (Files.isDirectory(parent)) { parent }
+      else { Files.createDirectories(parent) }
     }
 
   def createTempFile(prefix: String, suffix: String): Task[Path] =

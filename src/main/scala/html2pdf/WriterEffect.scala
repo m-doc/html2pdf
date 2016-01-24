@@ -1,13 +1,11 @@
 package html2pdf
 
-import java.nio.file.Path
-
 import html2pdf.StreamUtil._
 import html2pdf.logging.Log
-import scodec.bits.ByteVector
-
+import java.nio.file.Path
 import scalaz.concurrent.Task
 import scalaz.stream._
+import scodec.bits.ByteVector
 
 object WriterEffect {
   def createPdf(url: String): LogWriter[Task, ByteVector] =

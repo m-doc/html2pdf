@@ -1,7 +1,6 @@
 package html2pdf.logging
 
 import java.util.Date
-
 import scalaz.concurrent.Task
 
 case class LogEntry(msg: String, level: LogLevel) {

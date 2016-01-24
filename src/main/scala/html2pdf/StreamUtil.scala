@@ -1,8 +1,8 @@
 package html2pdf
 
 import scalaz.Bind
-import scalaz.stream.Process._
 import scalaz.stream._
+import scalaz.stream.Process._
 import scalaz.syntax.bind._
 
 object StreamUtil {

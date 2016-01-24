@@ -33,7 +33,8 @@ val http4sVersion = "0.12.0"
 libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
-  "org.http4s" %% "http4s-blaze-server" % http4sVersion
+  "org.http4s" %% "http4s-blaze-server" % http4sVersion,
+  "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
 )
 
 val rootPackage = "html2pdf"
@@ -68,4 +69,13 @@ buildInfoKeys := Seq[BuildInfoKey](
 )
 buildInfoPackage := rootPackage
 
-addCommandAlias("validate", ";coverage;test;debian:packageBin;rpm:packageBin")
+addCommandAlias("validate", Seq(
+  "clean",
+  "coverage",
+  "test",
+  "scalastyle",
+  "test:scalastyle",
+  "doc",
+  "debian:packageBin",
+  "rpm:packageBin"
+).mkString(";", ";", ""))
