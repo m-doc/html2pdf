@@ -1,8 +1,8 @@
 # html2pdf
 [![Build Status](https://travis-ci.org/m-doc/html2pdf.svg?branch=master)](https://travis-ci.org/m-doc/html2pdf)
 [![codecov.io](https://codecov.io/github/m-doc/html2pdf/coverage.svg?branch=master)](https://codecov.io/github/m-doc/html2pdf?branch=master)
-[![Codacy Badge](https://www.codacy.com/project/badge/f6e5369821064b7d96e0bda990e480ad)](https://www.codacy.com/app/fthomas/html2pdf-ms)
-[![Join the chat at https://gitter.im/m-doc/html2pdf](https://badges.gitter.im/m-doc/html2pdf.svg)](https://gitter.im/m-doc/html2pdf?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/18f97a2ac67a4d9e852d2a1bd806228f)](https://www.codacy.com/app/fthomas/html2pdf)
+[![Join the chat at https://gitter.im/m-doc/general](https://badges.gitter.im/m-doc/general.svg)](https://gitter.im/m-doc/general)
 
 **html2pdf** is a purely functional microservice for converting HTML to PDF.
 It is built on top of [wkhtmltopdf][wkhtmltopdf] for the conversion to PDF and

@@ -1,12 +1,12 @@
-name := "html2pdf-ms"
+name := "html2pdf"
 version := "0.0.1"
 description := "microservice for converting HTML to PDF"
 
-organization := "eu.timepit"
-homepage := Some(url("https://github.com/fthomas/html2pdf-ms"))
+organization := "org.m-doc"
+homepage := Some(url("https://github.com/m-doc/html2pdf"))
 startYear := Some(2015)
 licenses += "GPL-3.0" -> url("http://www.gnu.org/licenses/gpl-3.0.html")
-scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:fthomas/html2pdf-ms.git"))
+scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:m-doc/html2pdf.git"))
 
 scalaVersion := "2.11.7"
 scalacOptions ++= Seq(
