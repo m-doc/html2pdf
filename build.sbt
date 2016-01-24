@@ -5,6 +5,7 @@ version := "0.0.1"
 description := "microservice for converting HTML to PDF"
 
 organization := "org.m-doc"
+bintrayOrganization := Some("m-doc")
 homepage := Some(url("https://github.com/m-doc/html2pdf"))
 startYear := Some(2015)
 licenses += "GPL-3.0" -> url("http://www.gnu.org/licenses/gpl-3.0.html")
