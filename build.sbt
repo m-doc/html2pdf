@@ -1,3 +1,5 @@
+enablePlugins(BuildInfoPlugin)
+
 name := "html2pdf"
 version := "0.0.1"
 description := "microservice for converting HTML to PDF"
@@ -41,7 +43,6 @@ initialCommands := s"""
 """
 
 Revolver.settings
-scalariformSettings
 
 // sbt-native-packager
 enablePlugins(JavaServerAppPackaging)
@@ -62,8 +63,6 @@ rpmGroup := Some("System Environment/Daemons")
 rpmBrpJavaRepackJars := true
 
 // sbt-buildinfo
-buildInfoSettings
-sourceGenerators in Compile <+= buildInfo
 buildInfoKeys := Seq[BuildInfoKey](
   name,
   BuildInfoKey.map(homepage) { case (k, v) => k -> v.get.toString }
