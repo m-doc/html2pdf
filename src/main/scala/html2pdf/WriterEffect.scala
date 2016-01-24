@@ -43,7 +43,7 @@ object WriterEffect {
 
   def readFile(path: Path): LogWriter[Task, ByteVector] =
     Log.info(s"Reading file ${path.toString}") ++
-      Process.liftW(Process.constant(bufferSize).through(nio.file.chunkR(path)))
+      writer.liftO(Process.constant(bufferSize).through(nio.file.chunkR(path)))
 
   def tempFile(prefix: String, suffix: String): LogWriter[Task, Path] =
     Process.await(Effect.createTempFile(prefix, suffix)) { path =>

@@ -7,7 +7,7 @@ import html2pdf.logging.LogSink._
 import org.http4s.MediaType._
 import org.http4s.dsl._
 import org.http4s.headers._
-import org.http4s.server.HttpService
+import org.http4s.HttpService
 import org.http4s.{ Request, Uri }
 import scodec.bits.ByteVector
 
@@ -40,7 +40,7 @@ object Service {
 
   def pdfSource(url: String): Process[Task, ByteVector] = {
     val logFile = Paths.get(s"logs/$name.log")
-    WriterEffect.createPdf(url).drainW(stdoutAndFileSink(logFile))
+    WriterEffect.createPdf(url).observeW(stdoutAndFileSink(logFile)).stripW
   }
 
   val route = HttpService {
@@ -50,7 +50,7 @@ object Service {
     case req @ GET -> Root / "pdf" / _ =>
       extractUrl(req).fold(
         BadRequest(_),
-        url => Ok(pdfSource(url)).withHeaders(`Content-Type`(`application/pdf`))
+        url => Ok(pdfSource(url)).replaceAllHeaders(`Content-Type`(`application/pdf`))
       )
   }
 }

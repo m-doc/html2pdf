@@ -8,7 +8,7 @@ organization := "org.m-doc"
 bintrayOrganization := Some("m-doc")
 homepage := Some(url("https://github.com/m-doc/html2pdf"))
 startYear := Some(2015)
-licenses += "GPL-3.0" -> url("http://www.gnu.org/licenses/gpl-3.0.html")
+licenses += "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
 scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:m-doc/html2pdf.git"))
 
 scalaVersion := "2.11.7"
@@ -29,14 +29,12 @@ scalacOptions ++= Seq(
   "-Ywarn-value-discard"
 )
 
-val http4sVersion = "0.6.5"
+val http4sVersion = "0.12.0"
 libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
-  "org.http4s" %% "http4s-blazeserver" % http4sVersion
+  "org.http4s" %% "http4s-blaze-server" % http4sVersion
 )
-
-resolvers += "Scalaz Bintray Repo" at "http://dl.bintray.com/scalaz/releases"
 
 val rootPackage = "html2pdf"
 initialCommands := s"""
