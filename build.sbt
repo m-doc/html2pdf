@@ -29,8 +29,11 @@ scalacOptions ++= Seq(
   "-Ywarn-value-discard"
 )
 
+resolvers += "Frank's Bintray" at "https://dl.bintray.com/fthomas/maven"
+
 val http4sVersion = "0.12.0"
 libraryDependencies ++= Seq(
+  "eu.timepit" %% "properly" % "0.0.0-18-g5fef5a3",
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
   "org.http4s" %% "http4s-blaze-server" % http4sVersion,

@@ -36,10 +36,4 @@ object Effect {
       CmdResult(cmdLine.mkString(" "), outBuf.result(), errBuf.result(), status)
     }
   }
-
-  def getPropertyAsInt(key: String): Task[Option[Int]] =
-    getPropertyAsString(key).map(_.map(_.toInt))
-
-  def getPropertyAsString(key: String): Task[Option[String]] =
-    Task.delay(Option(System.getProperty(key)))
 }

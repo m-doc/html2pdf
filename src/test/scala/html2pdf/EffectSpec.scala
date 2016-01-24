@@ -1,12 +1,15 @@
 package html2pdf
 
+import java.nio.file.Files
 import org.scalacheck.Prop._
 import org.scalacheck.Properties
 
 class EffectSpec extends Properties("Effect") {
 
-  property("getPropertyAsInt") = secure {
-    scala.util.Properties.setProp("someInt", "42")
-    Effect.getPropertyAsInt("someInt").run.contains(42)
+  property("createTempFile") = secure {
+    val path = Effect.createTempFile("", "").run
+    val created = Files.exists(path)
+    Files.delete(path)
+    created
   }
 }
