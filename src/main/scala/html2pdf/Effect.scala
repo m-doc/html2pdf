@@ -12,12 +12,6 @@ object Effect {
       else { Files.createDirectories(parent) }
     }
 
-  def createTempFile(prefix: String, suffix: String): Task[Path] =
-    Task.delay(Files.createTempFile(prefix, suffix))
-
-  def deleteFile(path: Path): Task[Unit] =
-    Task.delay(Files.delete(path))
-
   case class CmdResult(cmd: String, out: String, err: String, status: Int)
 
   def execCmd(cmd: String, args: String*): Task[CmdResult] = {

@@ -3,6 +3,8 @@ package html2pdf
 import html2pdf.StreamUtil._
 import html2pdf.logging.Log
 import java.nio.file.Path
+import org.mdoc.fshell.Shell
+import org.mdoc.fshell.Shell.ShellSyntax
 import scalaz.concurrent.Task
 import scalaz.stream._
 import scodec.bits.ByteVector
@@ -16,7 +18,7 @@ object WriterEffect {
 
   def deleteFile(path: Path): LogWriter[Task, Unit] =
     Log.info(s"Deleting ${path.toString}") ++
-      StreamUtil.evalO(Effect.deleteFile(path))
+      StreamUtil.evalO(Shell.delete(path).runTask)
 
   def emitCmdResult(res: Effect.CmdResult): LogWriter[Nothing, String] = {
     def logError = Log.warn(res.err)
@@ -30,7 +32,7 @@ object WriterEffect {
   def execCmd(cmd: String, args: String*): LogWriter[Task, String] = {
     val cmdLine = (cmd +: args).mkString(" ")
     Log.info(s"Executing $cmdLine") ++
-      Process.await(Effect.execCmd(cmd, args: _*))(emitCmdResult)
+      Process.await(Effect.execCmd(cmd, args: _*))(emitCmdResult).onFailure(t => Log.error(t.getMessage))
   }
 
   def execWkHtmlToPdf(input: String, output: Path): LogWriter[Task, Nothing] =
@@ -44,7 +46,7 @@ object WriterEffect {
       writer.liftO(Process.constant(bufferSize).through(nio.file.chunkR(path)))
 
   def tempFile(prefix: String, suffix: String): LogWriter[Task, Path] =
-    Process.await(Effect.createTempFile(prefix, suffix)) { path =>
+    Process.await(Shell.createTempFile(prefix, suffix).runTask) { path =>
       val msg = s"Created temporary file ${path.toString}"
       Log.info(msg) ++ Process.emitO(path).onComplete(deleteFile(path).ignoreO)
     }
