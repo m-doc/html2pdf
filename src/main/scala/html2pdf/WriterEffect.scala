@@ -29,14 +29,12 @@ object WriterEffect {
       StreamUtil.runIf(res.status != 0)(logStatus)
   }
 
-  def execCmd(cmd: String, args: String*): LogWriter[Task, String] = {
-    val cmdLine = (cmd +: args).mkString(" ")
-    Log.info(s"Executing $cmdLine") ++
-      Process.await(Shell.readProcess(cmd, args.toList).runTask)(emitCmdResult).onFailure(t => Log.error(t.getMessage))
+  def execCmd(cmd: Shell[ProcessResult]): LogWriter[Task, String] = {
+    Process.await(cmd.runTask)(emitCmdResult).onFailure(t => Log.error(t.getMessage))
   }
 
   def execWkHtmlToPdf(input: String, output: Path): LogWriter[Task, Nothing] =
-    execCmd("wkhtmltopdf-h2p.sh", input, output.toString).flatMapO { out =>
+    execCmd(execWkhtmltopdf(input, output)).flatMapO { out =>
       val trimmed = out.trim
       StreamUtil.runIf(trimmed.nonEmpty)(Log.info(trimmed))
     }
@@ -50,4 +48,18 @@ object WriterEffect {
       val msg = s"Created temporary file ${path.toString}"
       Log.info(msg) ++ Process.emitO(path).onComplete(deleteFile(path).ignoreO)
     }
+
+  def execWkhtmltopdf(url: String, output: Path): Shell[ProcessResult] =
+    Shell.readProcess(
+      "xvfb-run",
+      List(
+        "--auto-servernum",
+        "-s", "-screen 0 1280x1024x24",
+        "wkhtmltopdf",
+        "--quiet",
+        url,
+        output.toString
+      )
+    )
+
 }
