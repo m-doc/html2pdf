@@ -3,6 +3,8 @@ package logging
 
 import html2pdf.StreamUtil._
 import java.nio.file.Path
+import org.mdoc.fshell.Shell
+import org.mdoc.fshell.Shell.ShellSyntax
 import scalaz.concurrent.Task
 import scalaz.stream._
 import scalaz.stream.Process._
@@ -13,7 +15,7 @@ object LogSink {
     stdoutSink.combine(fileSink(path))
 
   def fileSink(path: Path): Sink[Task, LogEntry] = {
-    eval(Effect.createParentDirectories(path)).flatMap { _ =>
+    eval(Shell.createParentDirectories(path).runTask).flatMap { _ =>
       io.fileChunkW(path.toString, bufferSize, append = true).compose {
         _.format.map { msg =>
           val line = msg + System.lineSeparator()

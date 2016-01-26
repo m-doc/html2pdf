@@ -3,7 +3,7 @@ package html2pdf
 import html2pdf.StreamUtil._
 import html2pdf.logging.Log
 import java.nio.file.Path
-import org.mdoc.fshell.Shell
+import org.mdoc.fshell.{ ProcessResult, Shell }
 import org.mdoc.fshell.Shell.ShellSyntax
 import scalaz.concurrent.Task
 import scalaz.stream._
@@ -20,9 +20,9 @@ object WriterEffect {
     Log.info(s"Deleting ${path.toString}") ++
       StreamUtil.evalO(Shell.delete(path).runTask)
 
-  def emitCmdResult(res: Effect.CmdResult): LogWriter[Nothing, String] = {
+  def emitCmdResult(res: ProcessResult): LogWriter[Nothing, String] = {
     def logError = Log.warn(res.err)
-    def logStatus = Log.error(s"${res.cmd} exited with status ${res.status.toString}")
+    def logStatus = Log.error(s"${res.command} exited with status ${res.status.toString}")
 
     Process.emitO(res.out) ++
       StreamUtil.runIf(res.err.nonEmpty)(logError) ++
@@ -32,7 +32,7 @@ object WriterEffect {
   def execCmd(cmd: String, args: String*): LogWriter[Task, String] = {
     val cmdLine = (cmd +: args).mkString(" ")
     Log.info(s"Executing $cmdLine") ++
-      Process.await(Effect.execCmd(cmd, args: _*))(emitCmdResult).onFailure(t => Log.error(t.getMessage))
+      Process.await(Shell.readProcess(cmd, args.toList).runTask)(emitCmdResult).onFailure(t => Log.error(t.getMessage))
   }
 
   def execWkHtmlToPdf(input: String, output: Path): LogWriter[Task, Nothing] =
