@@ -5,7 +5,6 @@ name := "html2pdf"
 version := "0.0.1"
 description := "microservice for converting HTML to PDF"
 
-homepage := Some(url("https://github.com/m-doc/html2pdf"))
 startYear := Some(2015)
 scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:m-doc/html2pdf.git"))
 
