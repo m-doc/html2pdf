@@ -1,14 +1,12 @@
 enablePlugins(BuildInfoPlugin)
+enablePlugins(MdocPlugin)
 
 name := "html2pdf"
 version := "0.0.1"
 description := "microservice for converting HTML to PDF"
 
-organization := "org.m-doc"
-bintrayOrganization := Some("m-doc")
 homepage := Some(url("https://github.com/m-doc/html2pdf"))
 startYear := Some(2015)
-licenses += "Apache-2.0" -> url("http://www.apache.org/licenses/LICENSE-2.0")
 scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:m-doc/html2pdf.git"))
 
 scalaVersion := "2.11.7"
@@ -30,7 +28,6 @@ scalacOptions ++= Seq(
 )
 
 resolvers += "Frank's Bintray" at "https://dl.bintray.com/fthomas/maven"
-resolvers += "m-doc's Bintray" at "https://dl.bintray.com/m-doc/maven"
 
 val http4sVersion = "0.12.0"
 libraryDependencies ++= Seq(
