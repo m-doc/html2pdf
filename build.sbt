@@ -12,7 +12,7 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-core" % http4sVersion,
   "org.http4s" %% "http4s-dsl" % http4sVersion,
   "org.http4s" %% "http4s-blaze-server" % http4sVersion,
-  "org.m-doc" %% "fshell" % "0.0.0-10-g4a61b77",
+  "org.m-doc" %% "fshell" % "0.0.0-23-ga79febf",
   "ch.qos.logback" % "logback-classic" % "1.1.3",
   "org.scalacheck" %% "scalacheck" % Version.scalacheck % "test"
 )
