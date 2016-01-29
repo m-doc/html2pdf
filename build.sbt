@@ -4,7 +4,7 @@ name := "html2pdf"
 version := "0.0.1"
 description := "microservice for converting HTML to PDF"
 
-resolvers += "Frank's Bintray" at "https://dl.bintray.com/fthomas/maven"
+resolvers += "fthomas/maven" at "https://dl.bintray.com/fthomas/maven"
 
 val http4sVersion = "0.12.0"
 libraryDependencies ++= Seq(
