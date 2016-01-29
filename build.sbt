@@ -1,30 +1,8 @@
-enablePlugins(BuildInfoPlugin)
 enablePlugins(MdocPlugin)
 
 name := "html2pdf"
 version := "0.0.1"
 description := "microservice for converting HTML to PDF"
-
-startYear := Some(2015)
-scmInfo := Some(ScmInfo(homepage.value.get, "git@github.com:m-doc/html2pdf.git"))
-
-scalaVersion := "2.11.7"
-scalacOptions ++= Seq(
-  "-deprecation",
-  "-encoding", "UTF-8",
-  "-feature",
-  "-language:existentials",
-  "-language:higherKinds",
-  "-language:implicitConversions",
-  "-unchecked",
-  "-Xfatal-warnings",
-  "-Xfuture",
-  "-Xlint",
-  "-Yno-adapted-args",
-  "-Ywarn-dead-code",
-  "-Ywarn-numeric-widen",
-  "-Ywarn-value-discard"
-)
 
 resolvers += "Frank's Bintray" at "https://dl.bintray.com/fthomas/maven"
 
@@ -36,13 +14,8 @@ libraryDependencies ++= Seq(
   "org.http4s" %% "http4s-blaze-server" % http4sVersion,
   "org.m-doc" %% "fshell" % "0.0.0-10-g4a61b77",
   "ch.qos.logback" % "logback-classic" % "1.1.3",
-  "org.scalacheck" %% "scalacheck" % "1.12.5" % "test"
+  "org.scalacheck" %% "scalacheck" % Version.scalacheck % "test"
 )
-
-val rootPackage = "html2pdf"
-initialCommands := s"""
-  import $rootPackage._
-"""
 
 Revolver.settings
 
@@ -63,13 +36,6 @@ rpmVendor := organization.value
 rpmLicense := licenses.value.headOption.map(_._1)
 rpmGroup := Some("System Environment/Daemons")
 rpmBrpJavaRepackJars := true
-
-// sbt-buildinfo
-buildInfoKeys := Seq[BuildInfoKey](
-  name,
-  BuildInfoKey.map(homepage) { case (k, v) => k -> v.get.toString }
-)
-buildInfoPackage := rootPackage
 
 addCommandAlias("validate", Seq(
   "clean",

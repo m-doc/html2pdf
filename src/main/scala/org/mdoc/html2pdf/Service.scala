@@ -1,7 +1,5 @@
-package html2pdf
+package org.mdoc.html2pdf
 
-import html2pdf.BuildInfo._
-import html2pdf.logging.LogSink._
 import java.nio.file.Paths
 import org.http4s.dsl._
 import org.http4s.headers._
@@ -9,6 +7,8 @@ import org.http4s.HttpService
 import org.http4s.MediaType._
 import org.http4s.Request
 import org.http4s.Uri
+import org.mdoc.html2pdf.BuildInfo._
+import org.mdoc.html2pdf.logging.LogSink._
 import scalaz.\/
 import scalaz.concurrent.Task
 import scalaz.stream.Process

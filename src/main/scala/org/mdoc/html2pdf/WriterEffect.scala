@@ -1,10 +1,10 @@
-package html2pdf
+package org.mdoc.html2pdf
 
-import html2pdf.StreamUtil._
-import html2pdf.logging.Log
 import java.nio.file.Path
 import org.mdoc.fshell.{ ProcessResult, Shell }
 import org.mdoc.fshell.Shell.ShellSyntax
+import org.mdoc.html2pdf.StreamUtil._
+import org.mdoc.html2pdf.logging.Log
 import scalaz.concurrent.Task
 import scalaz.stream._
 import scodec.bits.ByteVector

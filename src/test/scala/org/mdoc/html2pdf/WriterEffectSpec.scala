@@ -1,4 +1,4 @@
-package html2pdf
+package org.mdoc.html2pdf
 
 import org.mdoc.fshell.Shell
 import org.scalacheck.Prop._

@@ -1,4 +1,4 @@
-package html2pdf.logging
+package org.mdoc.html2pdf.logging
 
 import java.util.Date
 import scalaz.concurrent.Task

@@ -1,4 +1,4 @@
-package html2pdf
+package org.mdoc.html2pdf
 
 import eu.timepit.properly.Property
 import eu.timepit.properly.Property.PropertySyntax

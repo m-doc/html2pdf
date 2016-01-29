@@ -1,4 +1,4 @@
-package html2pdf.logging
+package org.mdoc.html2pdf.logging
 
 sealed trait LogLevel {
   def toUpperCase: String =

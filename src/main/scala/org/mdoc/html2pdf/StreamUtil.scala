@@ -1,4 +1,4 @@
-package html2pdf
+package org.mdoc.html2pdf
 
 import scalaz.Bind
 import scalaz.stream._

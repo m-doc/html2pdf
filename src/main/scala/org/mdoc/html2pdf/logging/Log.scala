@@ -1,4 +1,4 @@
-package html2pdf
+package org.mdoc.html2pdf
 package logging
 
 import scalaz.stream.Process
