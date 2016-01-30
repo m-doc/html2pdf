@@ -6,14 +6,13 @@ description := "microservice for converting HTML to PDF"
 
 resolvers += "fthomas/maven" at "https://dl.bintray.com/fthomas/maven"
 
-val http4sVersion = "0.12.0"
 libraryDependencies ++= Seq(
   "eu.timepit" %% "properly" % "0.0.0-18-g5fef5a3",
-  "org.http4s" %% "http4s-core" % http4sVersion,
-  "org.http4s" %% "http4s-dsl" % http4sVersion,
-  "org.http4s" %% "http4s-blaze-server" % http4sVersion,
-  "org.m-doc" %% "fshell" % "0.0.0-23-ga79febf",
-  "ch.qos.logback" % "logback-classic" % "1.1.3",
+  "org.http4s" %% "http4s-core" % Version.http4s,
+  "org.http4s" %% "http4s-dsl" % Version.http4s,
+  "org.http4s" %% "http4s-blaze-server" % Version.http4s,
+  "org.m-doc" %% "fshell" % "0.0.0-10-g4a61b77",
+  "ch.qos.logback" % "logback-classic" % Version.logback,
   "org.scalacheck" %% "scalacheck" % Version.scalacheck % "test"
 )
 
@@ -37,13 +36,7 @@ rpmLicense := licenses.value.headOption.map(_._1)
 rpmGroup := Some("System Environment/Daemons")
 rpmBrpJavaRepackJars := true
 
-addCommandAlias("validate", Seq(
-  "clean",
-  "coverage",
-  "test",
-  "scalastyle",
-  "test:scalastyle",
-  "doc",
+validateCommands ++= Seq(
   "debian:packageBin",
   "rpm:packageBin"
-).mkString(";", ";", ""))
+)
