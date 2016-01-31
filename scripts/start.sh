@@ -2,4 +2,5 @@
 
 cd /home/ubuntu/html2pdf-src
 sbt debian:packageBin
-dpkg -i target/html2pdf*.deb
+dpkg --unpack target/html2pdf*.deb
+apt-get -fy install
