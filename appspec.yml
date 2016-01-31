@@ -2,16 +2,16 @@ version: 0.0
 os: linux
 files:
   - source: /
-    destination: /home/ubuntu/html2pdf
+    destination: /home/ubuntu/html2pdf-src
 hooks:
   BeforeInstall:
-    - location: scripts/install_dependencies
+    - location: scripts/install-sbt.sh
       timeout: 300
       runas: root
-    - location: scripts/start_server
+    - location: scripts/start.sh
       timeout: 300
       runas: root
   ApplicationStop:
-    - location: scripts/stop_server
+    - location: scripts/stop.sh
       timeout: 300
       runas: root
