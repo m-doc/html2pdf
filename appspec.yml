@@ -1,7 +1,7 @@
 version: 0.0
 os: linux
 files:
-  - source: /index.html
+  - source: /index2.html
     destination: /var/www/html/
 hooks:
   BeforeInstall:
