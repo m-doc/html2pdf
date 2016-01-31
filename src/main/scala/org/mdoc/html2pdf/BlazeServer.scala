@@ -15,7 +15,7 @@ object BlazeServer extends App {
   val server: Task[Server] =
     httpPort.flatMap { port =>
       BlazeBuilder
-        .bindHttp(port)
+        .bindHttp(port, "::")
         .mountService(Service.route)
         .start
     }
