@@ -1,8 +1,8 @@
 version: 0.0
 os: linux
 files:
-  - source: /index2.html
-    destination: /var/www/html/
+  - source: /
+    destination: /home/ubuntu/html2pdf
 hooks:
   BeforeInstall:
     - location: scripts/install_dependencies
