@@ -4,7 +4,7 @@ files:
   - source: /
     destination: /home/ubuntu/html2pdf-src
 hooks:
-  BeforeInstall:
+  AfterInstall:
     - location: scripts/install-sbt.sh
       timeout: 300
       runas: root
