@@ -15,7 +15,7 @@ object LogSink {
     stdoutSink.combine(fileSink(path))
 
   def fileSink(path: Path): Sink[Task, LogEntry] = {
-    eval(Shell.createParentDirectories(path).runTask).flatMap { _ =>
+    eval(Shell.createParentDirectories(path).runTask.handle { case _ => () }).flatMap { _ =>
       io.fileChunkW(path.toString, bufferSize, append = true).compose {
         _.format.map { msg =>
           val line = msg + System.lineSeparator()
