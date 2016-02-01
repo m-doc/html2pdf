@@ -3,7 +3,8 @@
     "package": {
         "name": "html2pdf",
         "repo": "debian",
-        "subject": "m-doc"
+        "subject": "m-doc",
+        "licenses": ["MIT"]
     },
 
     "version": {
