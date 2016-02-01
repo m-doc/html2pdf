@@ -25,7 +25,8 @@ object Service {
       "http://http4s.org",
       "http://m-net.de",
       "http://reddit.com",
-      "http://scala-lang.org"
+      "http://scala-lang.org",
+      "http://www.spiegel.de"
     )
 
     val key = "url"
