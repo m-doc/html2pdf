@@ -8,7 +8,6 @@ addons:
   apt:
     packages:
     - graphviz
-    - rpm
 cache:
   directories:
   - "$HOME/.ivy2/cache"
@@ -17,9 +16,11 @@ script:
 - sbt ++$TRAVIS_SCALA_VERSION validate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+before_deploy:
+- sbt makeBintrayDeploymentDescriptorDeb
 deploy:
   provider: bintray
-  file: descriptor.yml
+  file: deploy.json
   user:
     secure: W79fU4GPXMuhDhYhoZfHgcss84MDH5vIyaMEBkQwAhUgyC//PX4ACcSdNesR/m8EuHF/j7IMRmKNRJY8ecm4RGRWGiHLvjjrZb1FOr+q+n98vjl+EjQEcfDioA2qXBZ/ilsnoG9ALsmh4mxk+EV7fPYjfmulC4oHVQt4+NCoBCo=
   key:

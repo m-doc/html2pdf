@@ -1,7 +1,6 @@
 enablePlugins(MdocPlugin)
 
 name := "html2pdf"
-version := "0.0.1"
 description := "microservice for converting HTML to PDF"
 
 resolvers += "fthomas/maven" at "https://dl.bintray.com/fthomas/maven"
@@ -29,14 +28,4 @@ enablePlugins(DebianPlugin)
 debianPackageDependencies in Debian ++= Seq("wkhtmltopdf", "xvfb", "logrotate")
 serverLoading in Debian := com.typesafe.sbt.packager.archetypes.ServerLoader.SystemV
 
-// rpm settings
-enablePlugins(RpmPlugin)
-rpmVendor := organization.value
-rpmLicense := licenses.value.headOption.map(_._1)
-rpmGroup := Some("System Environment/Daemons")
-rpmBrpJavaRepackJars := true
-
-validateCommands ++= Seq(
-  "debian:packageBin",
-  "rpm:packageBin"
-)
+validateCommands += "debian:packageBin"
