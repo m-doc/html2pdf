@@ -4,6 +4,7 @@
         "name": "html2pdf",
         "repo": "debian",
         "subject": "m-doc",
+        "vcs_url": "https://github.com/bintray/bintray-client-java.git",
         "licenses": ["MIT"]
     },
 
