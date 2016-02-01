@@ -17,6 +17,13 @@ script:
 - sbt ++$TRAVIS_SCALA_VERSION validate
 after_success:
 - bash <(curl -s https://codecov.io/bash)
+deploy:
+  provider: bintray
+  file: descriptor.yml
+  user:
+    secure: W79fU4GPXMuhDhYhoZfHgcss84MDH5vIyaMEBkQwAhUgyC//PX4ACcSdNesR/m8EuHF/j7IMRmKNRJY8ecm4RGRWGiHLvjjrZb1FOr+q+n98vjl+EjQEcfDioA2qXBZ/ilsnoG9ALsmh4mxk+EV7fPYjfmulC4oHVQt4+NCoBCo=
+  key:
+    secure: NLGSbwIiycOymEWE7dsGXe4KMQrgky2wfC/9tBcpODd/5Xyq1hZoZNeV7/8cNAGxgKlEJD+hkhozIJOUVn78qjuPHkmgq3KFgnAClfhfNUdlXLxBlr9jwkLl/T81aMbZ2NsL6h4L1GWNtWqjT9LNXhVWi8l0i4GdigSzYci85kg=
 notifications:
   webhooks:
     urls:
