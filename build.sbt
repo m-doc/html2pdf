@@ -21,7 +21,7 @@ Revolver.settings
 enablePlugins(JavaServerAppPackaging)
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
 packageSummary := description.value
-packageDescription := s"See <${homepage.value.get}> for more information."
+packageDescription := s"See <${homepage.value.getOrElse("")}> for more information."
 
 // deb settings
 enablePlugins(DebianPlugin)
