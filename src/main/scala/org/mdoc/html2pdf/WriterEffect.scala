@@ -5,6 +5,7 @@ import org.mdoc.fshell.{ ProcessResult, Shell }
 import org.mdoc.fshell.Shell.ShellSyntax
 import org.mdoc.html2pdf.StreamUtil._
 import org.mdoc.html2pdf.logging.Log
+import org.mdoc.renderingengines.Wkhtmltopdf
 import scalaz.concurrent.Task
 import scalaz.stream._
 import scodec.bits.ByteVector
@@ -34,7 +35,7 @@ object WriterEffect {
   }
 
   def execWkHtmlToPdf(input: String, output: Path): LogWriter[Task, Nothing] =
-    execCmd(execWkhtmltopdf(input, output)).flatMapO { out =>
+    execCmd(Wkhtmltopdf.execWkhtmltopdf(input, output)).flatMapO { out =>
       val trimmed = out.trim
       StreamUtil.runIf(trimmed.nonEmpty)(Log.info(trimmed))
     }
@@ -48,18 +49,4 @@ object WriterEffect {
       val msg = s"Created temporary file ${path.toString}"
       Log.info(msg) ++ Process.emitO(path).onComplete(deleteFile(path).ignoreO)
     }
-
-  def execWkhtmltopdf(url: String, output: Path): Shell[ProcessResult] =
-    Shell.readProcess(
-      "xvfb-run",
-      List(
-        "--auto-servernum",
-        "-s", "-screen 0 1280x1024x24",
-        "wkhtmltopdf",
-        "--quiet",
-        url,
-        output.toString
-      )
-    )
-
 }
