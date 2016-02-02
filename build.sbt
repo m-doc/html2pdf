@@ -15,8 +15,6 @@ libraryDependencies ++= Seq(
   "org.scalacheck" %% "scalacheck" % Version.scalacheck % "test"
 )
 
-Revolver.settings
-
 // sbt-native-packager
 enablePlugins(JavaServerAppPackaging)
 maintainer := "Frank S. Thomas <frank@timepit.eu>"
