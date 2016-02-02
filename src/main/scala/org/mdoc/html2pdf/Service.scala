@@ -47,6 +47,8 @@ object Service {
     case GET -> Root =>
       Uri.fromString(homepage).fold(_ => Ok(name), TemporaryRedirect(_))
 
+    case GET -> Root / "version" => Ok(version)
+
     case req @ GET -> Root / "pdf" / _ =>
       extractUrl(req).fold(
         BadRequest(_),
