@@ -1,5 +1,7 @@
 #!/bin/sh
 
+sleep 5s # give Bintray the change to update the repository
+
 chmod 600 cloud-identity
 ssh -q -o StrictHostKeyChecking=no -i cloud-identity $CLOUD_HOST \
   "DEBIAN_FRONTEND=noninteractive \
