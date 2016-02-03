@@ -35,7 +35,7 @@ object WriterEffect {
   }
 
   def execWkHtmlToPdf(input: String, output: Path): LogWriter[Task, Nothing] =
-    execCmd(Wkhtmltopdf.execWkhtmltopdf(input, output)).flatMapO { out =>
+    execCmd(Wkhtmltopdf.wkhtmltopdf(input, output)).flatMapO { out =>
       val trimmed = out.trim
       StreamUtil.runIf(trimmed.nonEmpty)(Log.info(trimmed))
     }
