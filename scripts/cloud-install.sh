@@ -1,10 +1,10 @@
 #!/bin/sh
 
-sleep 20s # give Bintray time to update the repository
+sleep 25s # give Bintray time to update the repository
 
 chmod 600 cloud-identity
 ssh -q -o StrictHostKeyChecking=no -i cloud-identity $CLOUD_HOST \
-  "DEBIAN_FRONTEND=noninteractive \
+  "export DEBIAN_FRONTEND=noninteractive && \
   sudo apt-get -y --force-yes update \
     -o Dir::Etc::sourcelist=\"sources.list.d/m-doc.list\" \
     -o Dir::Etc::sourceparts=\"-\" \
