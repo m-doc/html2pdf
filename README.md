@@ -13,6 +13,7 @@ HTTP. Here are some live examples of webpages converted to PDF:
 * http://html2pdf.m-doc.org/pdf/wikipedia.pdf?url=http://en.wikipedia.org
 * http://html2pdf.m-doc.org/pdf/google.pdf?url=http://google.com
 * http://html2pdf.m-doc.org/pdf/reddit.pdf?url=http://reddit.com
+* http://html2pdf.m-doc.org/version
 
 [http4s]: http://http4s.org
 [scalaz-stream]: https://github.com/scalaz/scalaz-stream
