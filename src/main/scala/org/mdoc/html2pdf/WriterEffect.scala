@@ -1,11 +1,11 @@
 package org.mdoc.html2pdf
 
-import java.nio.file.Path
+import java.nio.file.{ Path, Paths }
 import org.mdoc.fshell.{ ProcessResult, Shell }
 import org.mdoc.fshell.Shell.ShellSyntax
 import org.mdoc.html2pdf.StreamUtil._
 import org.mdoc.html2pdf.logging.Log
-import org.mdoc.renderingengines.Wkhtmltopdf
+import org.mdoc.rendering.engines.wkhtmltopdf
 import scalaz.concurrent.Task
 import scalaz.stream._
 import scodec.bits.ByteVector
@@ -31,11 +31,11 @@ object WriterEffect {
   }
 
   def execCmd(cmd: Shell[ProcessResult]): LogWriter[Task, String] = {
-    Process.await(cmd.runTask)(emitCmdResult).onFailure(t => Log.error(t.getMessage))
+    Process.await(cmd.throwOnError.runTask)(emitCmdResult).onFailure(t => Log.error(t.getMessage))
   }
 
   def execWkHtmlToPdf(input: String, output: Path): LogWriter[Task, Nothing] =
-    execCmd(Wkhtmltopdf.wkhtmltopdf(input, output)).flatMapO { out =>
+    execCmd(wkhtmltopdf.execWkhtmltopdf(input, output, Paths.get("."))).flatMapO { out =>
       val trimmed = out.trim
       StreamUtil.runIf(trimmed.nonEmpty)(Log.info(trimmed))
     }

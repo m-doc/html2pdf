@@ -6,8 +6,6 @@ import org.http4s.headers._
 import org.http4s.HttpService
 import org.http4s.MediaType._
 import org.http4s.Request
-import org.http4s.Uri
-import org.mdoc.html2pdf.BuildInfo._
 import org.mdoc.html2pdf.logging.LogSink._
 import scalaz.\/
 import scalaz.concurrent.Task
@@ -39,20 +37,20 @@ object Service {
   }
 
   def pdfSource(url: String): Process[Task, ByteVector] = {
-    val logFile = Paths.get(s"logs/$name.log")
+    val logFile = Paths.get(s"logs/${BuildInfo.name}.log")
     WriterEffect.createPdf(url).observeW(stdoutAndFileSink(logFile)).stripW
   }
 
   val route = HttpService {
-    case GET -> Root =>
-      Uri.fromString(homepage).fold(_ => Ok(name), TemporaryRedirect(_))
-
-    case GET -> Root / "version" => Ok(version)
-
     case req @ GET -> Root / "pdf" / _ =>
       extractUrl(req).fold(
         BadRequest(_),
         url => Ok(pdfSource(url)).replaceAllHeaders(`Content-Type`(`application/pdf`))
-      )
+      ).handleWith {
+          case throwable => InternalServerError(throwable.getMessage)
+        }
+
+    case GET -> Root / "version" =>
+      Ok(BuildInfo.version)
   }
 }

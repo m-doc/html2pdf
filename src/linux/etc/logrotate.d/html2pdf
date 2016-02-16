@@ -1,7 +1,0 @@
-/var/log/html2pdf/html2pdf.log {
-    copytruncate
-    daily
-    rotate 7
-    missingok
-    notifempty
-}

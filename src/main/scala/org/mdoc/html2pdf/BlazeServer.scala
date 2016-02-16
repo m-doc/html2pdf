@@ -1,12 +1,14 @@
 package org.mdoc.html2pdf
 
+import com.typesafe.scalalogging.StrictLogging
 import eu.timepit.properly.Property
 import eu.timepit.properly.Property.PropertySyntax
 import org.http4s.server.Server
 import org.http4s.server.blaze.BlazeBuilder
+import scala.util.Try
 import scalaz.concurrent.Task
 
-object BlazeServer extends App {
+object BlazeServer extends App with StrictLogging {
   val httpPort: Task[Int] = {
     val defaultPort = 8080
     Property.getAsIntOrElse("HTTP_PORT", defaultPort).runTask
@@ -20,5 +22,9 @@ object BlazeServer extends App {
         .start
     }
 
-  server.run.awaitShutdown()
+  Try(server.run.awaitShutdown()).recover {
+    case throwable =>
+      logger.error("awaitShutdown()", throwable)
+      sys.exit(1)
+  }
 }
