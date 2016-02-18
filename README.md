@@ -1,3 +1,7 @@
+html2pdf has been replaced by https://github.com/m-doc/rendering-service
+
+---
+
 # html2pdf
 [![Build Status](https://travis-ci.org/m-doc/html2pdf.svg?branch=master)](https://travis-ci.org/m-doc/html2pdf)
 [![codecov.io](https://codecov.io/github/m-doc/html2pdf/coverage.svg?branch=master)](https://codecov.io/github/m-doc/html2pdf?branch=master)
